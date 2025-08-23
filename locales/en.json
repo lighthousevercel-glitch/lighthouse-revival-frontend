@@ -1,0 +1,21 @@
+{
+  "nav.home": "Home",
+  "nav.about": "About Us",
+  "nav.services": "Services",
+  "nav.events": "Events",
+  "nav.contact": "Contact",
+  "hero.title": "Welcome to Light House Revival Church International",
+  "hero.subtitle": "Multi-lingual worship services in Abu Dhabi",
+  "services.english": "English Service",
+  "services.tamil": "Tamil Service",
+  "services.hindi": "Hindi Service",
+  "services.malayalam": "Malayalam Service",
+  "services.time.english": "12:30pm to 2:30pm",
+  "services.time.tamil": "3:00pm to 5:00pm",
+  "services.time.hindi": "4:30pm to 6:00pm",
+  "services.time.malayalam": "3:00pm to 5:00pm",
+  "transportation.title": "Free Transportation",
+  "transportation.subtitle": "We provide free church transportation from four locations",
+  "verse.reference": "Isaiah 41:10",
+  "verse.text": "So do not fear, for I am with you; do not be dismayed, for I am your God. I will strengthen you and help you; I will uphold you with my righteous right hand."
+}

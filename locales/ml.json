@@ -1,0 +1,21 @@
+{
+  "nav.home": "ഹോം",
+  "nav.about": "ഞങ്ങളെക്കുറിച്ച്",
+  "nav.services": "സേവനങ്ങൾ",
+  "nav.events": "ഇവന്റുകൾ",
+  "nav.contact": "ബന്ധപ്പെടുക",
+  "hero.title": "ലൈറ്റ് ഹൗസ് റിവൈവൽ ചർച്ച് ഇന്റർനാഷണലിലേക്ക് സ്വാഗതം",
+  "hero.subtitle": "അബുദാബിയിൽ ബഹുഭാഷാ ആരാധനാ സേവനങ്ങൾ",
+  "services.english": "ഇംഗ്ലീഷ് സേവനം",
+  "services.tamil": "തമിഴ് സേവനം",
+  "services.hindi": "ഹിന്ദി സേവനം",
+  "services.malayalam": "മലയാളം സേവനം",
+  "services.time.english": "12:30pm മുതൽ 2:30pm വരെ",
+  "services.time.tamil": "3:00pm മുതൽ 5:00pm വരെ",
+  "services.time.hindi": "4:30pm മുതൽ 6:00pm വരെ",
+  "services.time.malayalam": "3:00pm മുതൽ 5:00pm വരെ",
+  "transportation.title": "സൗജന്യ ഗതാഗതം",
+  "transportation.subtitle": "ഞങ്ങൾ നാല് സ്ഥലങ്ങളിൽ നിന്ന് സൗജന്യ ചർച്ച് ഗതാഗതം നൽകുന്നു",
+  "verse.reference": "യെശയ്യാവ് 41:10",
+  "verse.text": "ഭയപ്പെടരുത്, ഞാൻ നിന്നോടുകൂടെ ഉണ്ട്; വിഷമിക്കരുത്, ഞാൻ നിന്റെ ദൈവമാകുന്നു."
+}
