@@ -1,0 +1,21 @@
+{
+  "nav.home": "گھر",
+  "nav.about": "ہمارے بارے میں",
+  "nav.services": "خدمات",
+  "nav.events": "واقعات",
+  "nav.contact": "رابطہ",
+  "hero.title": "لائٹ ہاؤس ریوائیول چرچ انٹرنیشنل میں خوش آمدید",
+  "hero.subtitle": "ابوظبی میں کثیر لسانی عبادت کی خدمات",
+  "services.english": "انگریزی سروس",
+  "services.tamil": "تمل سروس",
+  "services.hindi": "ہندی سروس",
+  "services.malayalam": "ملیالم سروس",
+  "services.time.english": "12:30pm سے 2:30pm",
+  "services.time.tamil": "3:00pm سے 5:00pm",
+  "services.time.hindi": "4:30pm سے 6:00pm",
+  "services.time.malayalam": "3:00pm سے 5:00pm",
+  "transportation.title": "مفت نقل و حمل",
+  "transportation.subtitle": "ہم چار مقامات سے مفت چرچ ٹرانسپورٹ فراہم کرتے ہیں",
+  "verse.reference": "یسعیاہ 41:10",
+  "verse.text": "خوف نہ کر کیونکہ میں تیرے ساتھ ہوں، پریشان نہ ہو کیونکہ میں تیرا خدا ہوں۔"
+}

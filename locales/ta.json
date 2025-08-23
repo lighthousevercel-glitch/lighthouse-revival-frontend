@@ -1,0 +1,21 @@
+{
+  "nav.home": "முகப்பு",
+  "nav.about": "எங்களைப் பற்றி",
+  "nav.services": "சேவைகள்",
+  "nav.events": "நிகழ்வுகள்",
+  "nav.contact": "தொடர்பு",
+  "hero.title": "லைட் ஹவுஸ் ரிவைவல் சர்ச் இன்டர்நேஷனலுக்கு வரவேற்கிறோம்",
+  "hero.subtitle": "அபுதாபியில் பல மொழி வழிபாட்டு சேவைகள்",
+  "services.english": "ஆங்கில சேவை",
+  "services.tamil": "தமிழ் சேவை",
+  "services.hindi": "இந்தி சேவை",
+  "services.malayalam": "மலையாளம் சேவை",
+  "services.time.english": "12:30pm முதல் 2:30pm வரை",
+  "services.time.tamil": "3:00pm முதல் 5:00pm வரை",
+  "services.time.hindi": "4:30pm முதல் 6:00pm வரை",
+  "services.time.malayalam": "3:00pm முதல் 5:00pm வரை",
+  "transportation.title": "இலவச போக்குவரத்து",
+  "transportation.subtitle": "நாங்கள் நான்கு இடங்களிலிருந்து இலவச சர்ச் போக்குவரத்தை வழங்குகிறோம்",
+  "verse.reference": "ஏசாயா 41:10",
+  "verse.text": "பயப்படாதே, நான் உன்னுடன் இருக்கிறேன்; கலங்காதே, நான் உன் தேவன்."
+}
