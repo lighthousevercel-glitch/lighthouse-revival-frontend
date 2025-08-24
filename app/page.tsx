@@ -27,8 +27,9 @@ export default function HomePage() {
       <Navigation />
       <main>
         <HeroSection />
-        <ServicesSection />
         <VerseSection />
+        <ServicesSection />
+        
         <TransportationSection />
         <EventsSection />
       </main>
