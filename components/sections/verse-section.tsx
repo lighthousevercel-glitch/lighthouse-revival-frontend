@@ -19,21 +19,21 @@ export function VerseSection() {
   return (
     <section
       ref={sectionRef}
-      className="animate-section py-20 bg-gradient-to-r from-primary/5 via-accent/5 to-primary/5 relative overflow-hidden"
+      className="animate-section relative overflow-hidden bg-muted/30 py-20"
     >
       {/* Background Pattern */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-10 left-10 w-32 h-32 border border-primary/20 rounded-full" />
-        <div className="absolute bottom-10 right-10 w-24 h-24 border border-accent/20 rounded-full" />
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 border border-secondary/20 rounded-full" />
+      <div className="absolute inset-0 opacity-50 mix-blend-soft-light">
+        <div className="absolute top-10 left-10 h-32 w-32 rounded-full border border-primary/20" />
+        <div className="absolute bottom-10 right-10 h-24 w-24 rounded-full border border-accent/20" />
+        <div className="absolute top-1/2 left-1/4 h-16 w-16 rounded-full border border-secondary/20" />
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+        <div className="mx-auto max-w-4xl rounded-2xl border border-border/10 bg-card/50 p-8 text-center backdrop-blur-lg md:p-12">
           <div className="verse-content space-y-8">
-            <div className="flex justify-center mb-6">
-              <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center">
-                <Quote className="w-8 h-8 text-primary" />
+            <div className="mb-6 flex justify-center">
+              <div className="flex h-16 w-16 items-center justify-center rounded-full bg-primary/10 ring-4 ring-primary/5">
+                <Quote className="h-8 w-8 text-primary" />
               </div>
             </div>
 
@@ -43,7 +43,9 @@ export function VerseSection() {
               "{t("verse.text")}"
             </blockquote>
 
-            <cite className={`text-lg md:text-xl text-muted-foreground font-semibold ${isRTL ? "rtl:text-right" : ""}`}>
+            <cite
+              className={`not-italic text-lg md:text-xl text-muted-foreground font-semibold ${isRTL ? "rtl:text-right" : ""}`}
+            >
               — {t("verse.reference")}
             </cite>
           </div>

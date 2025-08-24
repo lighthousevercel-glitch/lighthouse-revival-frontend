@@ -5,6 +5,7 @@ import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/components/providers/language-provider"
 
+
 const geist = Geist({
   subsets: ["latin"],
   display: "swap",
@@ -20,7 +21,7 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: "Lighthouse Revival Church International",
   description: "Multi-lingual church services in Abu Dhabi - English, Tamil, Hindi, Malayalam",
-  generator: "v0.app",
+  generator: "Aswin Andro",
 }
 
 export default function RootLayout({
@@ -30,9 +31,10 @@ export default function RootLayout({
 }>) {
   return (
      <html lang="en" suppressHydrationWarning className={`${geist.variable} ${manrope.variable} antialiased`}>
-      <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem disableTransitionOnChange>
+      <body  className={geist.className}>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
           <LanguageProvider>{children}</LanguageProvider>
+           
         </ThemeProvider>
       </body>
     </html>

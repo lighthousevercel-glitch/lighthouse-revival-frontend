@@ -76,13 +76,13 @@ export function ServicesSection() {
             return (
               <Card
                 key={service.key}
-                className="service-card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
+                className="service-card group rounded-lg border border-border/20 bg-card/50 backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-2 hover:border-primary/50"
               >
                 <CardHeader className="pb-4">
                   <div
                     className={`w-full h-32 ${service.color} rounded-lg mb-4 flex items-center justify-center relative overflow-hidden`}
                   >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent" />
+                    <div className="absolute inset-0 bg-gradient-to-br from-foreground/5 to-transparent" />
                     <span className={`text-2xl font-bold ${service.textColor} relative z-10`}>
                       {t(service.titleKey)}
                     </span>
@@ -107,12 +107,12 @@ export function ServicesSection() {
 
                   <div className="flex gap-2 pt-2">
                     {service.hasYoutube && (
-                      <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                      <Button variant="outline" size="sm" className="flex-1">
                         <Youtube className="w-4 h-4 mr-1" />
                         Watch
                       </Button>
                     )}
-                    <Button variant="outline" size="sm" className="flex-1 bg-transparent">
+                    <Button variant="outline" size="sm" className="flex-1">
                       <ExternalLink className="w-4 h-4 mr-1" />
                       Location
                     </Button>

@@ -64,7 +64,7 @@ export function EventsSection() {
             return (
               <Card
                 key={index}
-                className="event-card group hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden"
+                className="event-card group overflow-hidden rounded-lg border border-border/20 bg-card/50 backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-2 hover:border-primary/50"
               >
                 <div className={`h-2 ${event.color}`} />
 
@@ -77,7 +77,7 @@ export function EventsSection() {
                       </Badge>
                     </div>
                     <div className={`w-12 h-12 ${event.color} rounded-full flex items-center justify-center`}>
-                      <IconComponent className="w-6 h-6 text-white" />
+                      <IconComponent className="w-6 h-6 text-primary-foreground" />
                     </div>
                   </div>
                 </CardHeader>
@@ -100,7 +100,7 @@ export function EventsSection() {
                     </div>
                   </div>
 
-                  <Button className="w-full group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                  <Button variant="secondary" className="w-full transition-colors group-hover:bg-primary group-hover:text-primary-foreground">
                     Join Event
                   </Button>
                 </CardContent>
