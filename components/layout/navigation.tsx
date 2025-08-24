@@ -6,6 +6,7 @@ import { LanguageSelector } from "@/components/ui/language-selector"
 import { useLanguage } from "@/components/providers/language-provider"
 import { Menu, X, Church } from "lucide-react"
 import { cn } from "@/lib/utils"
+import Link from "next/link"
 
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false)
@@ -31,8 +32,8 @@ export function Navigation() {
   return (
     <nav
       className={cn(
-        "fixed top-0 left-0 right-0 z-50 transition-all duration-300",
-        isScrolled ? "bg-background/95 backdrop-blur-md shadow-lg" : "bg-transparent",
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-in-out",
+        isScrolled ? "bg-background/80 backdrop-blur-lg border-b border-border/50" : "bg-transparent",
         isRTL && "rtl:text-right",
       )}
     >
@@ -47,12 +48,13 @@ export function Navigation() {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-8">
+          <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
               <a
                 key={item.key}
                 href={item.href}
-                className="text-foreground hover:text-primary transition-colors font-medium"
+                className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+
               >
                 {t(item.key)}
               </a>
@@ -60,8 +62,13 @@ export function Navigation() {
           </div>
 
           {/* Language Selector & Mobile Menu */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
             <LanguageSelector />
+            <div className="hidden sm:flex">
+              <Button asChild variant="ghost">
+                <Link href="/sign-in">{t("nav.signin")}</Link>
+              </Button>
+            </div>
 
             {/* Mobile Menu Button */}
             <Button variant="ghost" size="sm" className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
@@ -72,18 +79,23 @@ export function Navigation() {
 
         {/* Mobile Navigation */}
         {isOpen && (
-          <div className="md:hidden bg-background border-t border-border">
-            <div className="py-4 space-y-2">
+          <div className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border/50">
+            <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
                 <a
                   key={item.key}
                   href={item.href}
-                  className="block px-4 py-2 text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors"
+                  className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-muted"
                   onClick={() => setIsOpen(false)}
                 >
                   {t(item.key)}
                 </a>
               ))}
+              <div className="pt-4 pb-2 px-3 border-t border-border/50">
+                <Button asChild className="w-full" variant="secondary">
+                  <Link href="/sign-in">{t("nav.signin")}</Link>
+                </Button>
+              </div>
             </div>
           </div>
         )}

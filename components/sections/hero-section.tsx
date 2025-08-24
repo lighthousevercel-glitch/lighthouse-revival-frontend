@@ -1,23 +1,22 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/providers/language-provider"
-import { useGSAP } from "@/hooks/use-gsap"
 import { ArrowDown, Play } from "lucide-react"
+import { motion } from "framer-motion"
 
 export function HeroSection() {
   const { t, isRTL } = useLanguage()
   const heroRef = useRef<HTMLDivElement>(null)
-  const { fadeIn, slideIn } = useGSAP()
+  const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    if (heroRef.current) {
-      fadeIn(".hero-title", { delay: 0.5 })
-      fadeIn(".hero-subtitle", { delay: 0.8 })
-      slideIn(".hero-buttons", "left", { delay: 1.1 })
-    }
-  }, [fadeIn, slideIn])
+    // Ensure animations only run client-side
+    setMounted(true)
+  }, [])
+
+  if (!mounted) return null // prevents SSR mismatch
 
   return (
     <section
@@ -25,59 +24,87 @@ export function HeroSection() {
       ref={heroRef}
       className="hero-section relative min-h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Background Image with Overlay */}
-      <div className="absolute inset-0 z-0">
-        <div
-          className="w-full h-full bg-cover bg-center bg-no-repeat"
-          style={{
-            backgroundImage: `url('/placeholder-0cncc.png')`,
-          }}
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/60 to-background/80" />
-      </div>
+      {/* Background Video */}
+      <video
+        autoPlay
+        loop
+        muted
+        playsInline
+        preload="auto"
+        className="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover scale-105 animate-slow-zoom"
+        poster="/placeholder-0cncc.png"
+      >
+        <source src="/bg.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
 
-      {/* 3D Floating Elements */}
-      <div className="absolute inset-0 z-10 pointer-events-none">
-        <div className="absolute top-20 left-10 w-20 h-20 bg-primary/20 rounded-full blur-xl animate-pulse" />
-        <div className="absolute bottom-32 right-16 w-32 h-32 bg-accent/20 rounded-full blur-2xl animate-pulse delay-1000" />
-        <div className="absolute top-1/2 left-1/4 w-16 h-16 bg-secondary/30 rounded-full blur-lg animate-pulse delay-500" />
-      </div>
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-background via-background/80 to-transparent z-10" />
 
       {/* Content */}
       <div className="relative z-20 container mx-auto px-4 text-center">
-        <div className="max-w-4xl mx-auto space-y-8">
-          <h1
-            className={`hero-title text-4xl md:text-6xl lg:text-7xl font-bold leading-tight ${isRTL ? "rtl:text-right" : ""}`}
+        <motion.div
+          initial="hidden"
+          animate="visible"
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.3 } },
+          }}
+          className="max-w-4xl mx-auto space-y-8"
+        >
+          <motion.h1
+            variants={{
+              hidden: { opacity: 0, y: 40 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 1, ease: "easeOut" }}
+            className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter"
           >
-            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent">
+            <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-x">
               {t("hero.title")}
             </span>
-          </h1>
+          </motion.h1>
 
-          <p
-            className={`hero-subtitle text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed ${isRTL ? "rtl:text-right" : ""}`}
+          <motion.p
+            variants={{
+              hidden: { opacity: 0, y: 20 },
+              visible: { opacity: 1, y: 0 },
+            }}
+            transition={{ duration: 1, delay: 0.4 }}
+            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
           >
             {t("hero.subtitle")}
-          </p>
+          </motion.p>
 
-          <div
-            className={`hero-buttons flex flex-col sm:flex-row gap-4 justify-center items-center ${isRTL ? "rtl:flex-row-reverse" : ""}`}
+          <motion.div
+            variants={{
+              hidden: { opacity: 0, scale: 0.95 },
+              visible: { opacity: 1, scale: 1 },
+            }}
+            transition={{ duration: 0.8, delay: 0.7 }}
+            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
           >
-            <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground px-8 py-3 text-lg">
-              Join Our Service
-              <ArrowDown className="ml-2 w-5 h-5" />
+            <Button
+              size="lg"
+              className="px-8 py-3 text-lg relative overflow-hidden group hover:scale-105 transition-transform"
+            >
+              <span className="relative z-10 flex items-center">
+                Join Our Service
+                <ArrowDown className="ml-2 w-5 h-5 animate-bounce" />
+              </span>
+              <div className="absolute inset-0 bg-gradient-to-r from-primary/20 to-accent/20 opacity-0 group-hover:opacity-100 transition-opacity" />
             </Button>
-            <Button variant="outline" size="lg" className="px-8 py-3 text-lg bg-transparent">
-              <Play className="mr-2 w-5 h-5" />
+
+            <Button
+              variant="outline"
+              size="lg"
+              className="px-8 py-3 text-lg bg-background/50 backdrop-blur-md border-primary/40 hover:scale-105 transition-transform relative group"
+            >
+              <Play className="mr-2 w-5 h-5 group-hover:rotate-90 transition-transform" />
               Watch Online
             </Button>
-          </div>
-        </div>
-
-        {/* Scroll Indicator */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-          <ArrowDown className="w-6 h-6 text-muted-foreground" />
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   )
