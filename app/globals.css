@@ -1,6 +1,8 @@
 @import "tailwindcss";
-@import "tw-animate-css";
 
+/* NOTE: @custom-variant, @theme, and @apply are valid Tailwind CSS v4 directives. */
+/* If your editor shows "Unknown at rule" errors, install the official "Tailwind CSS IntelliSense" extension for your code editor. */
+/* The `tw-animate-css` import was removed as animations are typically handled by the `tailwindcss-animate` plugin configured in `tailwind.config.js`. */
 @custom-variant dark (&:is(.dark *));
 
 :root {
@@ -174,3 +176,20 @@
 .backface-hidden {
   backface-visibility: hidden;
 }
+
+
+@keyframes gradient-x {
+   0%, 100% { background-position: 0% 50%; }
+   50% { background-position: 100% 50%; }
+ }
+ .animate-gradient-x {
+   background-size: 200% 200%;
+   animation: gradient-x 6s ease infinite;
+ }
+ .animate-slow-zoom {
+   animation: slow-zoom 30s ease-in-out infinite alternate;
+ }
+ @keyframes slow-zoom {
+   from { transform: scale(1); }
+   to { transform: scale(1.1); }
+ }

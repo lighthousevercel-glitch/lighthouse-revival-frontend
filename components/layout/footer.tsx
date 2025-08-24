@@ -34,7 +34,7 @@ export function Footer() {
               {socialLinks.map((social) => {
                 const IconComponent = social.icon
                 return (
-                  <Button key={social.label} variant="outline" size="sm" className="w-10 h-10 p-0 bg-transparent">
+                  <Button key={social.label} variant="outline" size="icon" className="rounded-full bg-transparent hover:bg-primary/10 hover:text-primary">
                     <IconComponent className="w-4 h-4" />
                   </Button>
                 )
@@ -44,7 +44,7 @@ export function Footer() {
 
           {/* Quick Links */}
           <div className="space-y-4">
-            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Quick Links</h3>
+            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Menu</h3>
             <div className="space-y-2">
               {[
                 { key: "nav.home", href: "#home" },
@@ -65,7 +65,7 @@ export function Footer() {
 
           {/* Service Times */}
           <div className="space-y-4">
-            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Service Times</h3>
+            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Services</h3>
             <div className="space-y-2 text-sm">
               <div className={`flex justify-between ${isRTL ? "rtl:flex-row-reverse" : ""}`}>
                 <span className="text-muted-foreground">English:</span>
@@ -88,7 +88,7 @@ export function Footer() {
 
           {/* Contact Info */}
           <div className="space-y-4">
-            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Contact Us</h3>
+            <h3 className={`font-semibold text-lg ${isRTL ? "rtl:text-right" : ""}`}>Get in Touch</h3>
             <div className="space-y-3">
               <div className="flex items-center gap-2 text-sm">
                 <MapPin className="w-4 h-4 text-muted-foreground" />
@@ -103,16 +103,16 @@ export function Footer() {
                 <span className="text-muted-foreground">{CHURCH_INFO.contact.phone}</span>
               </div>
             </div>
-            <Button className="w-full">Need Prayer?</Button>
+            <Button className="w-full mt-4">Need Prayer?</Button>
           </div>
         </div>
 
-        <Separator className="my-8" />
+        <Separator className="my-12" />
 
         <div
-          className={`flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-muted-foreground ${isRTL ? "rtl:text-right" : ""}`}
+          className={`flex flex-col sm:flex-row justify-between items-center gap-4 text-sm text-muted-foreground`}
         >
-          <p>© 2024 Lighthouse Revival Church Ministries. All Rights Reserved.</p>
+          <p>© {new Date().getFullYear()} Lighthouse Revival Church Ministries. All Rights Reserved.</p>
           <div className="flex gap-4">
             <a href="#" className="hover:text-primary transition-colors">
               Privacy Policy
