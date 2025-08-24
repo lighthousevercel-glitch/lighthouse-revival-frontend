@@ -1,3 +1,4 @@
+export const runtime = "edge"
 import { type NextRequest, NextResponse } from "next/server"
 import { getAttendanceService, recordAttendanceService } from "@/lib/services/attendance-service"
 
@@ -11,8 +12,8 @@ export async function GET(request: NextRequest) {
 
     const attendance = await getAttendanceService({
       churchId: Number.parseInt(churchId),
-      startDate,
-      endDate,
+      // startDate,
+      // endDate,
       serviceType: serviceType === "all" ? undefined : serviceType,
     })
 
