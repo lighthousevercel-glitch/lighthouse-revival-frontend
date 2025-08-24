@@ -38,13 +38,13 @@ export function TransportationSection() {
               key={location}
               className="transport-card group border border-border/20 bg-card/50 backdrop-blur-sm transition-all duration-300 transform hover:-translate-y-1 hover:border-primary/50"
             >
-              <CardContent className="p-6 text-center">
-                <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                  <Bus className="w-8 h-8 text-primary" />
+              <CardContent className="p-4 text-center">
+                <div className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:bg-primary/20 transition-colors">
+                  <Bus className="w-6 h-6 text-primary" />
                 </div>
-                <h3 className="text-lg font-semibold mb-2">{location}</h3>
-                <div className="flex items-center justify-center gap-1 text-sm text-muted-foreground">
-                  <MapPin className="w-4 h-4" />
+                <h3 className="text-base font-semibold mb-1">{location}</h3>
+                <div className="flex items-center justify-center gap-1 text-xs text-muted-foreground">
+                  <MapPin className="w-3 h-3" />
                   <span>Pickup Point</span>
                 </div>
               </CardContent>
@@ -53,17 +53,17 @@ export function TransportationSection() {
         </div>
 
         <div className="text-center">
-          <div className="rounded-2xl border border-border/10 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-8 max-w-2xl mx-auto">
+          <div className="rounded-2xl border border-border/10 bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 p-6 max-w-2xl mx-auto">
             <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                <Phone className="w-6 h-6 text-primary-foreground" />
+              <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center">
+                <Phone className="w-5 h-5 text-primary-foreground" />
               </div>
             </div>
-            <h3 className="text-xl font-semibold mb-2">Need Transportation?</h3>
+            <h3 className="text-lg font-semibold mb-2">Need Transportation?</h3>
             <p className="text-muted-foreground mb-4">
               Contact us to arrange your free pickup from any of these locations
             </p>
-            <Button size="lg" className="bg-primary hover:bg-primary/90">
+            <Button className="bg-primary hover:bg-primary/90">
               Contact Us
             </Button>
           </div>
