@@ -24,6 +24,7 @@ export function Navigation() {
   const navItems = [
     { key: "nav.home", href: "/" },
     { key: "nav.about", href: "/about" },
+    { key: "nav.donate", href: "/welfare" },
     { key: "nav.services", href: "/#services" },
     { key: "nav.events", href: "/#events" },
     { key: "nav.contact", href: "/#contact" },
