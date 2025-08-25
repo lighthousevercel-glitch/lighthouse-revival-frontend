@@ -1,49 +1,64 @@
 "use client"
 
 import Image from "next/image"
-import { Metadata } from "next"
 import { useState } from "react"
 import { motion } from "framer-motion"
-
-// SEO Metadata
-export const metadata: Metadata = {
-  title: "Prayer Request | Lighthouse Revival Church",
-  description:
-    "Submit your prayer requests and let us stand with you in faith. Lighthouse Revival Church believes in the power of prayer to transform lives.",
-}
+import { useToast } from "@/hooks/use-toast"
 
 export default function PrayerRequestPage() {
+  const { toast } = useToast()
   const [form, setForm] = useState({
     name: "",
     email: "",
     phone: "",
-    request: "",
+    message: "",
   })
   const [loading, setLoading] = useState(false)
-  const [success, setSuccess] = useState(false)
+  const [isSubmitted, setIsSubmitted] = useState(false) // New state to track successful submission
 
-  const whatsappNumber = "971500000000" // 👉 Replace with Church WhatsApp number
-  const googleSheetURL = "YOUR_GOOGLE_APPS_SCRIPT_URL" // 👉 Replace with Web App URL
+  const whatsappNumber = "+971545449182" // 👉 Replace with Church WhatsApp number
 
   // Update form state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
-  // Send to Google Sheets
+  // Send to Google Sheets via Next.js API
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setIsSubmitted(false) // Reset submission status on new attempt
     try {
-      await fetch(googleSheetURL, {
+      const res = await fetch("/api/prayer-front", {
         method: "POST",
-        body: JSON.stringify(form),
         headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
       })
-      setSuccess(true)
-      setForm({ name: "", email: "", phone: "", request: "" })
+
+      if (res.ok) {
+        console.log("API call successful, attempting to show toast."); // Debugging: Check if this logs
+        toast({
+          title: "🙏 Prayer Sent",
+          description: "Your prayer request has been saved successfully. We will be praying for you!",
+          variant: "success", // Added success variant
+        })
+        setForm({ name: "", email: "", phone: "", message: "" })
+        setIsSubmitted(true) // Set to true on successful submission
+      } else {
+        toast({
+          title: "❌ Error",
+          description: "Something went wrong. Please try again.",
+          variant: "destructive",
+        })
+      }
+      // No need to set isSubmitted to false here, as it's already reset at the start
     } catch (error) {
-      console.error("Error submitting form:", error)
+      toast({
+        title: "⚠️ Network Error",
+        description: "Unable to submit request. Check your connection.",
+        variant: "destructive",
+      })
+      setIsSubmitted(false) // Ensure it's false on network error
     } finally {
       setLoading(false)
     }
@@ -51,7 +66,7 @@ export default function PrayerRequestPage() {
 
   // Send via WhatsApp
   const handleWhatsApp = () => {
-    const message = `🙏 Prayer Request 🙏\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nRequest:\n${form.request}`
+    const message = `🙏 Prayer Request 🙏\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
     window.open(url, "_blank")
   }
@@ -138,9 +153,9 @@ export default function PrayerRequestPage() {
                     className="p-3 rounded-lg border border-border bg-background"
                   />
                   <textarea
-                    name="request"
+                    name="message"
                     placeholder="Write your prayer request..."
-                    value={form.request}
+                    value={form.message}
                     onChange={handleChange}
                     className="p-3 rounded-lg border border-border bg-background h-32 resize-none"
                     required
@@ -150,10 +165,10 @@ export default function PrayerRequestPage() {
                   <div className="flex flex-col sm:flex-row gap-4 mt-4">
                     <button
                       type="submit"
-                      disabled={loading}
+                      disabled={loading || isSubmitted} // Disable if loading or already submitted
                       className="flex-1 py-3 px-6 rounded-xl bg-primary text-primary-foreground hover:bg-primary/90 transition"
                     >
-                      {loading ? "Sending..." : success ? "Sent ✅" : "Send Request"}
+                      {loading ? "Sending..." : (isSubmitted ? "Successfully Sent!" : "Send Request")}
                     </button>
                     <button
                       type="button"
@@ -189,7 +204,10 @@ export default function PrayerRequestPage() {
 
           {/* Footer */}
           <div className="mt-16 pt-8 border-t border-border text-center text-sm text-muted-foreground">
-            <p>© {new Date().getFullYear()} Lighthouse Revival Church Ministries. All Rights Reserved.</p>
+            <p>
+              © {new Date().getFullYear()} Lighthouse Revival Church Ministries. All Rights
+              Reserved.
+            </p>
           </div>
         </main>
       </div>
