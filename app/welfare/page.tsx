@@ -99,13 +99,13 @@ export default function WelfarePage() {
           </div>
 
           {/* Footer */}
-          <div className="mt-16 pt-8 border-t border-border text-center text-sm text-muted-foreground">
+          {/* <div className="mt-16 pt-8 border-t border-border text-center text-sm text-muted-foreground">
             <p>© {new Date().getFullYear()} Lighthouse Revival Church Ministries. All Rights Reserved.</p>
             <div className="flex gap-4 justify-center mt-2">
               <a href="#" className="hover:text-primary transition">Privacy Policy</a>
               <a href="#" className="hover:text-primary transition">Terms of Service</a>
             </div>
-          </div>
+          </div> */}
         </main>
       </div>
     </div>

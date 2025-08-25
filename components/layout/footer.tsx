@@ -5,9 +5,10 @@ import { CHURCH_INFO } from "@/lib/constants"
 import { Church, Mail, Phone, MapPin, Youtube, Facebook, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 
 export function Footer() {
-  const { t, isRTL } = useLanguage()
+  const { t } = useLanguage()
 
   const socialLinks = [
     { icon: Youtube, href: "#", label: "YouTube" },
@@ -18,9 +19,9 @@ export function Footer() {
   return (
     <footer id="contact" className="bg-muted/50 border-t border-border">
       <div className="container mx-auto px-4 py-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="flex flex-wrap gap-8 justify-between">
           {/* Church Info */}
-          <div className="space-y-3">
+          <div className="w-full sm:w-[45%] lg:w-[22%] space-y-3">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-primary rounded-full flex items-center justify-center">
                 <Church className="w-5 h-5 text-primary-foreground" />
@@ -36,79 +37,90 @@ export function Footer() {
                 return (
                   <Button
                     key={social.label}
+                    asChild
                     variant="outline"
                     size="icon"
                     className="rounded-full h-8 w-8 bg-transparent hover:bg-primary/10 hover:text-primary"
                   >
-                    <IconComponent className="w-4 h-4" />
+                    <a href={social.href} aria-label={social.label}>
+                      <IconComponent className="w-4 h-4" />
+                    </a>
                   </Button>
                 )
               })}
             </div>
           </div>
 
-          {/* Quick Links */}
-          <div>
-            <h3 className="font-semibold text-base mb-3">Menu</h3>
-            <div className="space-y-1">
-              {[
-                { key: "nav.home", href: "#home" },
-                { key: "nav.about", href: "#about" },
-                { key: "nav.services", href: "#services" },
-                { key: "nav.events", href: "#events" },
-              ].map((link) => (
-                <a
-                  key={link.key}
-                  href={link.href}
-                  className="block text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {t(link.key)}
-                </a>
-              ))}
+          {/* ✅ Menu & Get in Touch side by side on mobile */}
+          <div className="flex w-full sm:w-[45%] lg:w-[44%] gap-6">
+            {/* Quick Links */}
+            <div className="w-1/2">
+              <h3 className="font-semibold text-base mb-3">Menu</h3>
+              <div className="space-y-1">
+                {[
+                  { key: "nav.home", href: "#home" },
+                  { key: "nav.about", href: "#about" },
+                  { key: "nav.services", href: "#services" },
+                  { key: "nav.events", href: "#events" },
+                ].map((link) => (
+                  <a
+                    key={link.key}
+                    href={link.href}
+                    className="block text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {t(link.key)}
+                  </a>
+                ))}
+              </div>
+            </div>
+
+            {/* Contact Info */}
+            <div className="w-1/2">
+              <h3 className="font-semibold text-base mb-3">Get in Touch</h3>
+              <div className="space-y-2 text-sm">
+                <div className="flex items-center gap-2">
+                  <MapPin className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">Abu Dhabi, UAE</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Mail className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">{CHURCH_INFO.contact.email}</span>
+                </div>
+                <div className="flex items-center gap-2">
+                  <Phone className="w-4 h-4 text-muted-foreground" />
+                  <span className="text-muted-foreground">{CHURCH_INFO.contact.phone}</span>
+                </div>
+              </div>
+
+              <Link href="/request" passHref>
+                <Button className="w-full mt-3 h-9 text-sm rounded-lg">
+                  Need Prayer?
+                </Button>
+              </Link>
             </div>
           </div>
 
           {/* Service Times */}
-          <div>
+          <div className="w-full sm:w-[45%] lg:w-[22%]">
             <h3 className="font-semibold text-base mb-3">Services</h3>
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">English:</span>
+                <span className="text-muted-foreground">English</span>
                 <span>{t("services.time.english")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tamil:</span>
+                <span className="text-muted-foreground">Tamil</span>
                 <span>{t("services.time.tamil")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Hindi:</span>
+                <span className="text-muted-foreground">Hindi</span>
                 <span>{t("services.time.hindi")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Malayalam:</span>
+                <span className="text-muted-foreground">Malayalam</span>
                 <span>{t("services.time.malayalam")}</span>
               </div>
             </div>
-          </div>
-
-          {/* Contact Info */}
-          <div>
-            <h3 className="font-semibold text-base mb-3">Get in Touch</h3>
-            <div className="space-y-2 text-sm">
-              <div className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">Abu Dhabi, UAE</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">{CHURCH_INFO.contact.email}</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Phone className="w-4 h-4 text-muted-foreground" />
-                <span className="text-muted-foreground">{CHURCH_INFO.contact.phone}</span>
-              </div>
-            </div>
-            <Button className="w-full mt-3 h-9 text-sm rounded-lg">Need Prayer?</Button>
           </div>
         </div>
 
