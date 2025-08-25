@@ -1,10 +1,11 @@
 {
   "nav.home": "Home",
-  "nav.about": "About Us",
+  "nav.about": "About",
   "nav.services": "Services",
   "nav.events": "Events",
   "nav.contact": "Contact",
   "nav.signin": "Sign In",
+  "nav.donate": "Donate",
   "hero.title": "Welcome to Light House Revival Church",
   "hero.subtitle": "Multi-lingual worship services in Abu Dhabi",
   "services.english": "English Service",
