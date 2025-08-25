@@ -22,11 +22,11 @@ export function Navigation() {
   }, [])
 
   const navItems = [
-    { key: "nav.home", href: "#home" },
-    { key: "nav.about", href: "#about" },
-    { key: "nav.services", href: "#services" },
-    { key: "nav.events", href: "#events" },
-    { key: "nav.contact", href: "#contact" },
+    { key: "nav.home", href: "/" },
+    { key: "nav.about", href: "/about" },
+    { key: "nav.services", href: "/#services" },
+    { key: "nav.events", href: "/#events" },
+    { key: "nav.contact", href: "/#contact" },
   ]
 
   return (
@@ -50,14 +50,14 @@ export function Navigation() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-6">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.key}
                 href={item.href}
                 className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
 
               >
                 {t(item.key)}
-              </a>
+              </Link>
             ))}
           </div>
 
@@ -82,14 +82,14 @@ export function Navigation() {
           <div className="md:hidden bg-background/95 backdrop-blur-lg border-t border-border/50">
             <div className="px-2 pt-2 pb-3 space-y-1">
               {navItems.map((item) => (
-                <a
+                <Link
                   key={item.key}
                   href={item.href}
                   className="block px-3 py-2 rounded-md text-base font-medium text-foreground hover:text-primary hover:bg-muted"
                   onClick={() => setIsOpen(false)}
                 >
                   {t(item.key)}
-                </a>
+                </Link>
               ))}
               <div className="pt-4 pb-2 px-3 border-t border-border/50">
                 <Button asChild className="w-full" variant="secondary">

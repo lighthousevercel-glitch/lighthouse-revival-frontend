@@ -32,7 +32,7 @@ export function HeroSection() {
         playsInline
         preload="auto"
         className="absolute z-0 w-auto min-w-full min-h-full max-w-none object-cover scale-105 animate-slow-zoom"
-        poster="/placeholder-0cncc.png"
+        poster="/poster.jpg"
       >
         <source src="/bg.mp4" type="video/mp4" />
         Your browser does not support the video tag.
