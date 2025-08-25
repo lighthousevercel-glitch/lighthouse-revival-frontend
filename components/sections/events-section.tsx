@@ -1,14 +1,15 @@
 "use client"
 
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef, useState, useMemo, useCallback } from "react"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/providers/language-provider"
 import { useGSAP } from "@/hooks/use-gsap"
-import { Calendar, Clock, MapPin, ChevronLeft, ChevronRight } from "lucide-react"
+import { Calendar, Clock, MapPin } from "lucide-react"
+import { motion, AnimatePresence } from "framer-motion"
 
-// Helper to generate Add to Calendar links
+// 🎯 Calendar link generator
 function generateCalendarLinks(event: any) {
   const start = new Date(event.startDate).toISOString().replace(/-|:|\.\d+/g, "")
   const end = new Date(event.endDate).toISOString().replace(/-|:|\.\d+/g, "")
@@ -19,38 +20,24 @@ function generateCalendarLinks(event: any) {
 
   return {
     google: `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${start}/${end}&details=${description}&location=${location}`,
-    outlook: `https://outlook.live.com/owa/?path=/calendar/action/compose&rru=addevent&subject=${title}&body=${description}&location=${location}&startdt=${start}&enddt=${end}`,
-    apple: `data:text/calendar;charset=utf8,BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-URL:${location}
-DTSTART:${start}
-DTEND:${end}
-SUMMARY:${title}
-DESCRIPTION:${description}
-LOCATION:${location}
-END:VEVENT
-END:VCALENDAR`,
   }
 }
 
 export function EventsSection() {
-  const { t, isRTL } = useLanguage()
+  const { t } = useLanguage()
   const sectionRef = useRef<HTMLDivElement>(null)
   const { staggerAnimation, fadeIn } = useGSAP()
 
   const [events, setEvents] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
+  const [filter, setFilter] = useState<"week" | "month" | "all">("week") // default → this week
+  const [selectedEvent, setSelectedEvent] = useState<any | null>(null)
 
-  // Filters & Pagination
-  const [filter, setFilter] = useState<"week" | "month" | "all">("all")
-  const [currentPage, setCurrentPage] = useState(1)
-  const eventsPerPage = 4
-
+  // GSAP animations
   useEffect(() => {
     if (sectionRef.current) {
       fadeIn(".events-title", { delay: 0.2 })
-      staggerAnimation(".event-card", { delay: 0.5 })
+      staggerAnimation(".event-item", { delay: 0.5 })
     }
   }, [fadeIn, staggerAnimation])
 
@@ -85,6 +72,7 @@ export function EventsSection() {
         })
 
         setEvents(formatted)
+        setSelectedEvent(formatted[0] || null)
       } catch (error) {
         console.error("Error fetching events", error)
       } finally {
@@ -95,204 +83,178 @@ export function EventsSection() {
     fetchEvents()
   }, [])
 
-  // Filtering
-  const filteredEvents = events.filter((event) => {
+  // Memoized filtering
+  const filteredEvents = useMemo(() => {
     const today = new Date()
-    const eventDate = new Date(event.startDate)
+    return events.filter((event) => {
+      const eventDate = new Date(event.startDate)
+      if (filter === "week") {
+        const endOfWeek = new Date(today)
+        endOfWeek.setDate(today.getDate() + 7)
+        return eventDate >= today && eventDate <= endOfWeek
+      }
+      if (filter === "month") {
+        const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
+        return eventDate >= today && eventDate <= endOfMonth
+      }
+      return true
+    })
+  }, [events, filter])
 
-    if (filter === "week") {
-      const endOfWeek = new Date(today)
-      endOfWeek.setDate(today.getDate() + 7)
-      return eventDate >= today && eventDate <= endOfWeek
-    }
-    if (filter === "month") {
-      const endOfMonth = new Date(today.getFullYear(), today.getMonth() + 1, 0)
-      return eventDate >= today && eventDate <= endOfMonth
-    }
-    return true
-  })
+  // Limit display for "all"
+  const visibleEvents = useMemo(() => {
+    if (filter === "all") return filteredEvents
+    return filteredEvents.slice(0, 3) // show only 3 by default for week/month
+  }, [filteredEvents, filter])
 
-  // Pagination
-  const totalPages = Math.ceil(filteredEvents.length / eventsPerPage)
-  const paginatedEvents = filteredEvents.slice(
-    (currentPage - 1) * eventsPerPage,
-    currentPage * eventsPerPage
-  )
+  // Event click handler (stable ref)
+  const handleEventClick = useCallback((event: any) => {
+    setSelectedEvent(event)
+  }, [])
 
   return (
     <section
       id="events"
       ref={sectionRef}
-      className="animate-section py-20 bg-gradient-to-b from-muted/30 to-background"
+      className="py-20 bg-gradient-to-b from-muted/30 to-background"
     >
       <div className="container mx-auto px-4">
-        <div className="text-center mb-16">
-          <h2
-            className={`events-title text-3xl md:text-4xl font-bold mb-4 ${
-              isRTL ? "rtl:text-right" : ""
-            }`}
-          >
+        {/* Title */}
+        <div className="text-center mb-12">
+          <h2 className="events-title text-3xl md:text-4xl font-bold mb-4">
             Next Events
           </h2>
-          <p
-            className={`text-xl text-muted-foreground max-w-2xl mx-auto ${
-              isRTL ? "rtl:text-right" : ""
-            }`}
-          >
+          <p className="text-lg text-muted-foreground">
             Join us for upcoming special services and community events
           </p>
         </div>
 
         {/* Filters */}
-        <div className="flex justify-center gap-4 mb-10">
-          <Button
-            variant={filter === "all" ? "default" : "outline"}
-            onClick={() => setFilter("all")}
-          >
-            All
-          </Button>
-          <Button
-            variant={filter === "week" ? "default" : "outline"}
-            onClick={() => setFilter("week")}
-          >
-            This Week
-          </Button>
-          <Button
-            variant={filter === "month" ? "default" : "outline"}
-            onClick={() => setFilter("month")}
-          >
-            This Month
-          </Button>
+        <div className="flex justify-center gap-6 mb-10">
+          {["all", "week", "month"].map((option) => (
+            <Button
+              key={option}
+              variant="ghost"
+              onClick={() => setFilter(option as any)}
+              className={`relative px-6 py-2 text-lg transition-all ${
+                filter === option
+                  ? "text-primary font-semibold"
+                  : "text-muted-foreground"
+              }`}
+            >
+              {option === "all" ? "All" : option === "week" ? "This Week" : "This Month"}
+              {filter === option && (
+                <motion.div
+                  layoutId="activeFilter"
+                  className="absolute inset-0 -z-10 rounded-xl bg-primary/10 shadow-[0_0_15px_rgba(0,0,0,0.1)]"
+                  transition={{ type: "spring", bounce: 0.3, duration: 0.6 }}
+                />
+              )}
+            </Button>
+          ))}
         </div>
 
-        {loading ? (
-          <p className="text-center text-muted-foreground">Loading events...</p>
-        ) : filteredEvents.length === 0 ? (
-          <p className="text-center text-muted-foreground">No upcoming events</p>
-        ) : (
-          <>
-            {/* Events List */}
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
-              {paginatedEvents.map((event) => {
-                const links = generateCalendarLinks(event)
-                return (
-                  <Card
+        {/* Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 max-w-6xl mx-auto">
+          {/* Events List */}
+          <div
+            className={`space-y-4 ${
+              filter === "all"
+                ? "max-h-[400px] overflow-y-auto pr-2 custom-scrollbar"
+                : ""
+            }`}
+          >
+            {loading ? (
+              <p className="text-muted-foreground">Loading events...</p>
+            ) : visibleEvents.length === 0 ? (
+              <p className="text-muted-foreground">No upcoming events</p>
+            ) : (
+              <AnimatePresence>
+                {visibleEvents.map((event) => (
+                  <motion.div
                     key={event.id}
-                    className="event-card group overflow-hidden rounded-2xl border border-border/20 bg-card/60 backdrop-blur-md shadow-lg transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl"
+                    layout
+                    initial={{ opacity: 0, y: 15, scale: 0.95 }}
+                    animate={{ opacity: 1, y: 0, scale: 1 }}
+                    exit={{ opacity: 0, y: -15, scale: 0.95 }}
+                    transition={{ duration: 0.3, ease: "easeOut" }}
+                    className={`event-item cursor-pointer rounded-xl border border-border/20 bg-card/50 backdrop-blur-md p-4 transition-all hover:shadow-lg ${
+                      selectedEvent?.id === event.id ? "ring-2 ring-primary" : ""
+                    }`}
+                    onClick={() => handleEventClick(event)}
                   >
-                    <div className="h-1 bg-gradient-to-r from-primary to-accent" />
+                    <h3 className="font-semibold text-lg">{event.title}</h3>
+                    <p className="text-sm text-muted-foreground">{event.date} · {event.time}</p>
+                  </motion.div>
+                ))}
+              </AnimatePresence>
+            )}
+          </div>
 
-                    <CardHeader className="pb-4">
-                      <div className="flex items-start justify-between">
-                        <div className="flex-1">
-                          <CardTitle
-                            className={`text-xl font-semibold mb-2 ${
-                              isRTL ? "rtl:text-right" : ""
-                            }`}
-                          >
-                            {event.title}
-                          </CardTitle>
-                          <Badge variant="secondary" className="w-fit">
-                            Upcoming
-                          </Badge>
-                        </div>
-                      </div>
-                    </CardHeader>
-
-                    <CardContent className="space-y-4">
-                      <div className="space-y-2 text-sm text-muted-foreground">
-                        <div className="flex items-center gap-2">
-                          <Calendar className="w-4 h-4" />
-                          <span>{event.date}</span>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <Clock className="w-4 h-4" />
-                          <span>{event.time}</span>
-                        </div>
-
-                        {event.location && (
-                          <div
-                            className="flex items-center gap-2 cursor-pointer hover:text-primary transition-colors"
-                            onClick={() =>
-                              window.open(
-                                `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
-                                  event.location
-                                )}`,
-                                "_blank"
-                              )
-                            }
-                          >
-                            <MapPin className="w-4 h-4" />
-                            <span>{event.location}</span>
-                          </div>
-                        )}
-                      </div>
-
-                      {/* Calendar Actions */}
-                      <div className="flex flex-wrap gap-2">
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => window.open(links.google, "_blank")}
-                        >
-                          Google
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => window.open(links.outlook, "_blank")}
-                        >
-                          Outlook
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          size="sm"
-                          onClick={() => {
-                            const blob = new Blob([decodeURIComponent(links.apple)], {
-                              type: "text/calendar;charset=utf-8",
-                            })
-                            const url = URL.createObjectURL(blob)
-                            const a = document.createElement("a")
-                            a.href = url
-                            a.download = `${event.title}.ics`
-                            a.click()
-                          }}
-                        >
-                          Apple
-                        </Button>
-                      </div>
-                    </CardContent>
-                  </Card>
-                )
-              })}
-            </div>
-
-            {/* Pagination */}
-            <div className="flex justify-center items-center gap-4 mt-10">
-              <Button
-                variant="outline"
-                size="icon"
-                disabled={currentPage === 1}
-                onClick={() => setCurrentPage((p) => p - 1)}
+          {/* Event Details */}
+          <AnimatePresence mode="wait">
+            {selectedEvent && (
+              <motion.div
+                key={selectedEvent.id}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+                transition={{ duration: 0.4 }}
               >
-                <ChevronLeft className="w-4 h-4" />
-              </Button>
-              <span>
-                Page {currentPage} of {totalPages}
-              </span>
-              <Button
-                variant="outline"
-                size="icon"
-                disabled={currentPage === totalPages}
-                onClick={() => setCurrentPage((p) => p + 1)}
-              >
-                <ChevronRight className="w-4 h-4" />
-              </Button>
-            </div>
-          </>
-        )}
+                <Card className="rounded-2xl border-0 shadow-xl bg-gradient-to-br from-background/80 to-muted/30 backdrop-blur-lg">
+                  <CardHeader>
+                    <CardTitle className="text-2xl">{selectedEvent.title}</CardTitle>
+                    <Badge variant="secondary" className="mt-2">Upcoming</Badge>
+                  </CardHeader>
+                  <CardContent className="space-y-4 text-muted-foreground">
+                    <div className="flex items-center gap-2">
+                      <Calendar className="w-4 h-4" />
+                      <span>{selectedEvent.date}</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4" />
+                      <span>{selectedEvent.time}</span>
+                    </div>
+                    {selectedEvent.location && (
+                      <div
+                        className="flex items-center gap-2 cursor-pointer hover:text-primary transition"
+                        onClick={() =>
+                          window.open(
+                            `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(
+                              selectedEvent.location
+                            )}`,
+                            "_blank"
+                          )
+                        }
+                      >
+                        <MapPin className="w-4 h-4" />
+                        <span>{selectedEvent.location}</span>
+                      </div>
+                    )}
+                    {selectedEvent.description && (
+                      <p className="pt-2">{selectedEvent.description}</p>
+                    )}
+                  </CardContent>
+                </Card>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
+
+      {/* Custom scrollbar CSS */}
+      <style jsx>{`
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 6px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: transparent;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background-color: rgba(0,0,0,0.2);
+          border-radius: 20px;
+        }
+      `}</style>
     </section>
   )
 }
