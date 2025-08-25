@@ -11,9 +11,9 @@ import { useState } from "react"
 import localFont from "next/font/local"
 
 // Google Fonts (self-hosted or via next/font/google)
-import { Noto_Serif_Tamil, Hind, Noto_Serif_Malayalam, Noto_Nastaliq_Urdu } from "next/font/google"
+import { Baloo_Thambi_2, Hind, Noto_Serif_Malayalam, Noto_Nastaliq_Urdu } from "next/font/google"
 
-const tamilFont = Noto_Serif_Tamil({ subsets: ["tamil"], weight: ["400", "700"] })
+const tamilFont = Baloo_Thambi_2({ subsets: ["tamil"], weight: ["400", "700"] })
 const hindiFont = Hind({ subsets: ["latin"], weight: ["400", "700"] })
 const malayalamFont = Noto_Serif_Malayalam({ subsets: ["malayalam"], weight: ["400", "700"] })
 const urduFont = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["400", "700"] })
