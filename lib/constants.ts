@@ -4,8 +4,8 @@ export const CHURCH_INFO = {
   established: "2006",
   pastor: "Pastor Manoj Thomas",
   contact: {
-    email: "info@lighthousechurch.ae",
-    phone: "+971-XX-XXX-XXXX",
+    email: "info@lighthousechurch.com",
+    phone: "+971-50-374-8678",
   },
   services: {
     english: {

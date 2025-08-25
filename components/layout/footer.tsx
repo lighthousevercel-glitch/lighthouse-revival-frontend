@@ -5,6 +5,7 @@ import { CHURCH_INFO } from "@/lib/constants"
 import { Church, Mail, Phone, MapPin, Youtube, Facebook, Instagram } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
+import Link from "next/link"
 
 export function Footer() {
   const { t, isRTL } = useLanguage()
@@ -73,19 +74,19 @@ export function Footer() {
             <h3 className="font-semibold text-base mb-3">Services</h3>
             <div className="space-y-1 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">English:</span>
+                <span className="text-muted-foreground">English</span>
                 <span>{t("services.time.english")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Tamil:</span>
+                <span className="text-muted-foreground">Tamil</span>
                 <span>{t("services.time.tamil")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Hindi:</span>
+                <span className="text-muted-foreground">Hindi</span>
                 <span>{t("services.time.hindi")}</span>
               </div>
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Malayalam:</span>
+                <span className="text-muted-foreground">Malayalam</span>
                 <span>{t("services.time.malayalam")}</span>
               </div>
             </div>
@@ -108,7 +109,13 @@ export function Footer() {
                 <span className="text-muted-foreground">{CHURCH_INFO.contact.phone}</span>
               </div>
             </div>
-            <Button className="w-full mt-3 h-9 text-sm rounded-lg">Need Prayer?</Button>
+            
+            {/* ✅ Updated Need Prayer Button with Next.js Link */}
+            <Link href="/request" passHref>
+              <Button className="w-full mt-3 h-9 text-sm rounded-lg">
+                Need Prayer?
+              </Button>
+            </Link>
           </div>
         </div>
 

@@ -6,17 +6,42 @@ import { useLanguage } from "@/components/providers/language-provider"
 import { ArrowDown, Play } from "lucide-react"
 import { motion } from "framer-motion"
 
+// Google Fonts
+import { Syne, Baloo_Thambi_2, Hind, Noto_Serif_Malayalam, Noto_Nastaliq_Urdu } from "next/font/google"
+
+// Font instances
+const syne = Syne({ subsets: ["latin"], weight: ["400", "600", "700"], display: "swap" })
+const balooThambi2 = Baloo_Thambi_2({ subsets: ["tamil"], weight: ["400", "700"], display: "swap" })
+const hind = Hind({ subsets: ["latin", "devanagari"], weight: ["400", "600", "700"], display: "swap" })
+const notoMalayalam = Noto_Serif_Malayalam({ subsets: ["malayalam"], weight: ["400", "600", "700"], display: "swap" })
+const notoUrdu = Noto_Nastaliq_Urdu({ subsets: ["arabic"], weight: ["400", "700"], display: "swap" })
+
+// Helper to pick correct font by language
+const getFontClass = (lang: string) => {
+  switch (lang) {
+    case "ta": // Tamil
+      return balooThambi2.className
+    case "hi": // Hindi
+      return hind.className
+    case "ml": // Malayalam
+      return notoMalayalam.className
+    case "ur": // Urdu
+      return notoUrdu.className
+    default: // English
+      return syne.className
+  }
+}
+
 export function HeroSection() {
-  const { t, isRTL } = useLanguage()
+  const { t, isRTL, language } = useLanguage()
   const heroRef = useRef<HTMLDivElement>(null)
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
-    // Ensure animations only run client-side
     setMounted(true)
   }, [])
 
-  if (!mounted) return null // prevents SSR mismatch
+  if (!mounted) return null
 
   return (
     <section
@@ -58,7 +83,7 @@ export function HeroSection() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 1, ease: "easeOut" }}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter"
+            className={`${getFontClass(language)} text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight tracking-tighter`}
           >
             <span className="bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent animate-gradient-x">
               {t("hero.title")}
@@ -71,7 +96,7 @@ export function HeroSection() {
               visible: { opacity: 1, y: 0 },
             }}
             transition={{ duration: 1, delay: 0.4 }}
-            className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed"
+            className={`${getFontClass(language)} text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed`}
           >
             {t("hero.subtitle")}
           </motion.p>
