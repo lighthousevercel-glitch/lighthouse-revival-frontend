@@ -27,6 +27,7 @@ export function Navigation() {
     { key: "nav.services", href: "/#services" },
     { key: "nav.events", href: "/#events" },
     { key: "nav.contact", href: "/request" },
+    { key: "nav.livetv", href: "/livetv" },
   ]
 
   return (

@@ -28,6 +28,11 @@ export const CHURCH_INFO = {
       day: "Sunday",
       location: "G2 Hall at Brethren Church Center, Abu Dhabi",
     },
+     urdu: {
+      time: "4:30pm to 6:00pm",
+      day: "Saturday",
+      location: "Elohim Hall, Mussafah, Abu Dhabi",
+    }
   },
   transportation: {
     locations: ["Baniyas", "Abu Dhabi City", "Shabiya", "ICAD"],
