@@ -4,8 +4,8 @@ import { Geist, Manrope } from "next/font/google"
 import "./globals.css"
 import { ThemeProvider } from "@/components/theme-provider"
 import { LanguageProvider } from "@/components/providers/language-provider"
-
-
+import { Navigation } from "@/components/layout/navigation"
+import { Footer } from "@/components/layout/footer"
 const geist = Geist({
   subsets: ["latin"],
   display: "swap",
@@ -33,8 +33,10 @@ export default function RootLayout({
      <html lang="en" suppressHydrationWarning className={`${geist.variable} ${manrope.variable} antialiased`}>
       <body  className={geist.className}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem disableTransitionOnChange>
-          <LanguageProvider>{children}</LanguageProvider>
-           
+          <LanguageProvider>{children}
+           <Navigation />
+           <Footer />
+          </LanguageProvider>
         </ThemeProvider>
       </body>
     </html>

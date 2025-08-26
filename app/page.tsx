@@ -33,7 +33,6 @@ export default function HomePage() {
         <TransportationSection />
         <EventsSection />
       </main>
-      <Footer />
     </div>
   )
 }
