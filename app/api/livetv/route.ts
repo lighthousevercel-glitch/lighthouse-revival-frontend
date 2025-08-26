@@ -1,3 +1,4 @@
+export const runtime = "edge"
 import { NextResponse } from "next/server"
 
 const YOUTUBE_API_KEY = "AIzaSyBt39vZRR3N83zfjLH09v_u0paFiPcfCkc"
