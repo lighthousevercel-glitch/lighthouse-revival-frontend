@@ -16,7 +16,7 @@ export default function PrayerRequestPage() {
   const [loading, setLoading] = useState(false)
   const [isSubmitted, setIsSubmitted] = useState(false) // New state to track successful submission
 
-  const whatsappNumber = "+971545449182" // 👉 Replace with Church WhatsApp number
+  const whatsappNumber = "+971503748678" // 👉 Replace with Church WhatsApp number
 
   // Update form state
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -66,7 +66,7 @@ export default function PrayerRequestPage() {
 
   // Send via WhatsApp
   const handleWhatsApp = () => {
-    const message = `🙏 Prayer Request 🙏\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
+    const message = `🙏 Prayer Request - From Web\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
     window.open(url, "_blank")
   }
