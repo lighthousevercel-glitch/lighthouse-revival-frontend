@@ -1,6 +1,7 @@
 "use client"
 
 import { useRef, useState, useEffect } from "react"
+import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { useLanguage } from "@/components/providers/language-provider"
 import { ArrowDown, Play } from "lucide-react"
@@ -121,12 +122,15 @@ export function HeroSection() {
             </Button>
 
             <Button
+              asChild
               variant="outline"
               size="lg"
               className="px-8 py-3 text-lg bg-background/50 backdrop-blur-md border-primary/40 hover:scale-105 transition-transform relative group"
             >
-              <Play className="mr-2 w-5 h-5 group-hover:rotate-90 transition-transform" />
-              Watch Online
+              <Link href="/livetv">
+                <Play className="mr-2 w-5 h-5 group-hover:rotate-90 transition-transform" />
+                Watch Online
+              </Link>
             </Button>
           </motion.div>
         </motion.div>
