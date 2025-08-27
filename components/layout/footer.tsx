@@ -10,9 +10,11 @@ import Link from "next/link"
 export function Footer() {
   const { t } = useLanguage()
 
+
+
   const socialLinks = [
-    { icon: Youtube, href: "#", label: "YouTube" },
-    { icon: Facebook, href: "#", label: "Facebook" },
+    { icon: Youtube, href: "https://www.youtube.com/c/LIGHTHOUSEREVIVALCHURCH", label: "YouTube" },
+    { icon: Facebook, href: "https://www.facebook.com/lighthouserevivalabudhabi", label: "Facebook" },
     { icon: Instagram, href: "#", label: "Instagram" },
   ]
 
@@ -59,7 +61,7 @@ export function Footer() {
               <div className="space-y-1">
                 {[
                   { key: "nav.home", href: "#home" },
-                  { key: "nav.about", href: "#about" },
+                  { key: "nav.about", href: "/about" },
                   { key: "nav.services", href: "#services" },
                   { key: "nav.events", href: "#events" },
                 ].map((link) => (
