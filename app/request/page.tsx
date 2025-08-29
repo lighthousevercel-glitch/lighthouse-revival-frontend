@@ -66,6 +66,14 @@ export default function PrayerRequestPage() {
 
   // Send via WhatsApp
   const handleWhatsApp = () => {
+    if (!form.name || !form.email || !form.phone || !form.message) {
+      toast({
+        title: "📝 All fields are required",
+        description: "Please fill out all fields to send your prayer request via WhatsApp.",
+        variant: "destructive",
+      })
+      return
+    }
     const message = `🙏 Prayer Request - From Web\n\nName: ${form.name}\nEmail: ${form.email}\nPhone: ${form.phone}\n\nMessage:\n${form.message}`
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`
     window.open(url, "_blank")
@@ -143,6 +151,7 @@ export default function PrayerRequestPage() {
                     value={form.email}
                     onChange={handleChange}
                     className="p-3 rounded-lg border border-border bg-background"
+                    required
                   />
                   <input
                     type="tel"
@@ -151,6 +160,7 @@ export default function PrayerRequestPage() {
                     value={form.phone}
                     onChange={handleChange}
                     className="p-3 rounded-lg border border-border bg-background"
+                    required
                   />
                   <textarea
                     name="message"
