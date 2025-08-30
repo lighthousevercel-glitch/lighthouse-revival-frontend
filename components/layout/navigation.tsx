@@ -71,7 +71,7 @@ export function Navigation() {
             <LanguageSelector />
             <div className="hidden sm:flex">
               <Button asChild variant="ghost" className="hover:bg-primary/10">
-                <Link href="/sign-in">{t("nav.signin")}</Link>
+                <Link href="/login">{t("nav.signin")}</Link>
               </Button>
             </div>
 
@@ -110,7 +110,7 @@ export function Navigation() {
                 ))}
                 <div className="pt-4 border-t border-border/50">
                   <Button asChild className="w-full rounded-lg shadow-md">
-                    <Link href="/sign-in">{t("nav.signin")}</Link>
+                    <Link href="/login">{t("nav.signin")}</Link>
                   </Button>
                 </div>
               </div>
